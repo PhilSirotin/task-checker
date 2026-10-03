@@ -12,17 +12,15 @@ if (isset($_POST['task'])){
       $_SESSION['tasks'] = [];
     }
      $_SESSION['tasks'][] = $task;
-    
-
-    echo count($_SESSION['tasks']);
-    echo 'Data received: ' . htmlspecialchars($task);
+      header('Location: ' . $_SERVER['PHP_SELF']);
+  exit;
   }
 } else {
   echo "The field did not arrive";
 }
 
 // session_destroy();
-unset($_SESSION['tasks']);
+// unset($_SESSION['tasks']);
 ?>
 
 
@@ -37,12 +35,12 @@ unset($_SESSION['tasks']);
         value="<?php echo htmlspecialchars($task, ENT_QUOTES, 'UTF-8'); ?>"
         >
   <button type="submit">Добавить</button>
-      <ul> 
+</form>
+
+  <ul> 
 <?php
     foreach(($_SESSION['tasks'] ?? []) as $item) {
         echo '<li>' . htmlspecialchars($item, ENT_QUOTES, 'UTF-8') . '</li>'; 
     }
 ?>
 </ul>
-       
-</form>
