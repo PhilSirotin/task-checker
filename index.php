@@ -21,7 +21,8 @@ if (isset($_POST['task'])){
   echo "The field did not arrive";
 }
 
-session_destroy();
+// session_destroy();
+unset($_SESSION['tasks']);
 ?>
 
 
@@ -36,12 +37,12 @@ session_destroy();
         value="<?php echo htmlspecialchars($task, ENT_QUOTES, 'UTF-8'); ?>"
         >
   <button type="submit">Добавить</button>
-        <ul>
-        <?php
-        foreach($_SESSION['tasks'] as $item) {
-        ?> 
-        <li><?php echo htmlspecialchars($item, ENT_QUOTES, 'UTF-8'); ?></li>
-        <li> <?php } ?></li>
-
-      </ul>
+      <ul> 
+<?php
+    foreach(($_SESSION['tasks'] ?? []) as $item) {
+        echo '<li>' . htmlspecialchars($item, ENT_QUOTES, 'UTF-8') . '</li>'; 
+    }
+?>
+</ul>
+       
 </form>
