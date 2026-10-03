@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 $task = "";
 if (isset($_POST['task'])){
@@ -7,11 +8,20 @@ if (isset($_POST['task'])){
   if ($task == "") {
     echo 'Enter the task';
   } else {
-    echo 'Данные получены: ' . htmlspecialchars($task);
+    if(!isset($_SESSION['tasks']) || !is_array($_SESSION['tasks'])){
+      $_SESSION['tasks'] = [];
+    }
+     $_SESSION['tasks'][] = $task;
+    
+
+    echo count($_SESSION['tasks']);
+    echo 'Data received: ' . htmlspecialchars($task);
   }
 } else {
-  echo "Поле не пришло";
+  echo "The field did not arrive";
 }
+
+session_destroy();
 ?>
 
 
@@ -26,4 +36,12 @@ if (isset($_POST['task'])){
         value="<?php echo htmlspecialchars($task, ENT_QUOTES, 'UTF-8'); ?>"
         >
   <button type="submit">Добавить</button>
+        <ul>
+        <?php
+        foreach($_SESSION['tasks'] as $item) {
+        ?> 
+        <li><?php echo htmlspecialchars($item, ENT_QUOTES, 'UTF-8'); ?></li>
+        <li> <?php } ?></li>
+
+      </ul>
 </form>
