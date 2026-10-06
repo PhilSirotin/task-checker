@@ -1,10 +1,18 @@
 <?php
 session_start();
 
+
 if (isset($_POST['delete_index'])) {
   $delete_index = $_POST['delete_index'];
-  unset($_SESSION['tasks'][$delete_index]);
-  $_SESSION['tasks'] = array_values($_SESSION['tasks']);
+  if (isset($_SESSION['tasks']) && is_array($_SESSION['tasks'])) {
+    if (array_key_exists($delete_index, $_SESSION['tasks'])) {
+      
+      unset($_SESSION['tasks'][$delete_index]);
+      $_SESSION['tasks'] = array_values($_SESSION['tasks']);
+    }
+  }
+  header('Location: ' . $_SERVER['PHP_SELF']);
+  exit;
 }
 
 $task = "";
